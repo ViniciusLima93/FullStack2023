@@ -4,8 +4,12 @@ import {
     Routes,
     Route,
     Link,
-    useParams
+    useParams,
+    useMatch
 } from 'react-router-dom';
+
+import SignIn from './pages/public/SignIn';
+import SignUp from './pages/public/SignUp';
 
 
 function Home () {
@@ -18,7 +22,7 @@ function Home () {
 }
 
 function Contatos () {
-    let {path, url} = useParams
+    let match = useMatch('/contacts/:id')
     return (
         <div>
             <Menu />
@@ -26,7 +30,7 @@ function Contatos () {
         
             <ul>
                 <li>
-                    <Link to={`${url}/111`} >Contato A</Link>
+                    <Link to={`${match}`} >Contato A</Link>
                 </li>
                 <li>
                     <Link to="/contacts" >Contato B</Link>
@@ -36,8 +40,8 @@ function Contatos () {
                 </li>
             </ul>
             <Routes>
-                <Route path={path} />
-                <Route path={`${path}/contactId`}>
+                <Route path={match} />
+                <Route path={`${match}/:contactId`}>
                     <Contact />
                 </Route>
             </Routes>
@@ -47,7 +51,7 @@ function Contatos () {
 }
 
 function Contact () {
-    let {contactId} = useParams
+    let {contactId} = useParams();
 
     return (
         <div>
@@ -56,23 +60,6 @@ function Contact () {
     )
 }
 
-
-function SignIn () {
-    return (
-        <div>
-            <h2>Sign IN</h2>
-        </div>
-    )
-}
-
-
-function Signout () {
-    return (
-        <div>
-            <h2>Sign Out</h2>
-        </div>
-    )
-}
 
 function Messages () {
     <div>
@@ -88,7 +75,7 @@ function Menu () {
                     <Link to="/contacts">Contatos</Link>
                     </li>
                     <li>
-                        <Link to="/messages">Login</Link>
+                        <Link to="/signin">Login</Link>
                     </li>
                     <li>
                         <Link to="/signout">Sair</Link>
@@ -113,7 +100,7 @@ export default function Rotas () {
                     <Route path='/signin' element={<SignIn />}/>    
                 </Routes>
                 <Routes>
-                    <Route path='/signout' element={<Signout />}/>    
+                    <Route path='/signout' element={<SignUp />}/>    
                 </Routes>
                 <Routes>
                     <Route path='/messages' element={<Messages />}/>    
